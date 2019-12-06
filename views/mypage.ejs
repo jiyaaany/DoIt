@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DO_IT</title>
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Noto+Sans:700&display=swap" rel="stylesheet">
+	<!--초기화-->
+	<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+	<!-- 기본 헤더 컨텐츠 푸터 layout -->
+	<link rel="stylesheet" href="../stylesheets/layout.css">
+	<!-- login_after css -->
+	<link rel="stylesheet" href="../stylesheets/login_after.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div class="head">
+		<a class="logo" href="/"><img src="../images/logo_long.png"></a>
+		<div class="nav">
+			<ul>
+				<li><a href="#"><%=name%>님 환영합니다.</a></li>
+				<li><a href="#">로그아웃</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="contents">
+		<div class="innercontents">
+			<div class="addedStudy">
+				<h2>수강 중인 강좌</h2>
+				<% if(mypage != null && mypage.length > 0){ %>
+				<div class="l_row">
+					<% for ( var i = 0; i < mypage.length; i++){ %>
+						<div class="l_col l_col_3_12">
+							<a href="/study/detail/<%=mypage[i].study_id%>"><img src="http://placehold.it/250x250" alt="">
+							<h3>[<%=mypage[i].region%>] <%=mypage[i].subject%></h3>
+							</a>
+						</div>
+					<% } %>
+				</div>
+				<% }else{ %>
+				<p style="color:white;se">가입한 스터디가 없습니다.</p>
+				<% } %>
+			</div>
+			<div class="searchStudy">
+				<h2>원하는 강좌 찾기</h2>
+					<input type="text" placeholder="ex) 야구" class="inputsearch" id="txtSearch">
+					<input type="button" value="Search" class="submitsearch" id="btnSearch">
+				<div class="addedStudy" id="divStudyList">
+					<div class="l_row" id="studyList">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="footer">LEVELUPTHON 11 | 2019</div>
+	<script>
+  $("#btnSearch").click(function(){
+    var search_text = $("#txtSearch").val();
+    if(search_text == ''){
+      alert('검색어를 입력해주세요!');
+    }
+    else{
+      $.ajax({
+        url : '/study/search',
+        async : true,
+        type : 'GET',
+        data : {
+          search_text : search_text
+        },
+        dataType : 'json',
+
+		success : function(data){
+			var str = '';
+			if(data.studyList.length>0){
+				for(var i = 0; i<data.studyList.length; i++){
+					str += '<div class="l_col l_col_3_12"><a href="/study/detail/'+data.studyList[i].study_id+'"><img src="http://placehold.it/250x250" alt=""><h3>['+data.studyList[i].region+'] '+ data.studyList[i].subject +'</h3></a></div>';
+				}
+				$("#studyList").html(str);
+			}else{
+				str = "<p style='color:white'>검색 결과가 없습니다.</p>";
+				$("#studyList").html(str);
+			}
+		},
+        error : function(err){
+          alert('다시 검색해주세요!');
+        }
+      });
+    }
+  });
+$(document).ready(function() {
+	$("#txtSearch").keydown(function(key) {
+		if (key.keyCode == 13) {
+			$("#btnSearch").click();
+		}
+	});
+});
+  </script>
+</body>
+</html>

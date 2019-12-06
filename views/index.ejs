@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DO_IT</title>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<!--fullpage.js js,css 파일 삽입-->
+<!-- <link rel="stylesheet" href="./fullpage/fullpage.min.css">
+<script src="./fullpage/fullpage.min.js"></script> -->
+<!-- font -->
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Noto+Sans:700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+<!--초기화-->
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<!-- 기본 헤더 컨텐츠 푸터 layout -->
+<link rel="stylesheet" href="./stylesheets/layout2.css">
+<!-- home css -->
+<link rel="stylesheet" href="./stylesheets/home.css">
+</head>
+<body>
+<div id="container">
+	<div class="section section1">
+		<div class="container">
+			<div class="head">
+				<a class="logo" href="/"><img src="./images/logo_long.png"></a>
+				<div class="nav">
+					<ul>
+					<% if(name == '') { %>
+						<li><a href="/user/login">로그인</a></li>
+					<% } else { %>
+						<li><a href="/user/mypage"/><%= name %></li>
+						<li><a href="/user/logout"/>로그아웃</li>
+					<% } %>
+						<li><a href="#">코치신청</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="contents">
+				<div class="innercontetns">
+					<div class="maintext">
+						운동,<br>
+						<SPAN>혼자</SPAN>말고
+						<br>
+						<span>같이</span>하자
+						<div class="tologin">
+						<% if(name == '') { %>
+							<a href="/user/login">GET STARTED</a>
+						<% } else { %>
+							<a href="/user/mypage"/>GET STARTED</a>
+						<% } %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>        
+            <!-- <div class="section section2">
+
+                <div class="contentsBox">
+                    <h1>누구든 "<span>DO IT</span>"</h1>
+                    
+                    <div class="member ">
+                        <p>
+                        같은 지역에서
+
+                        </p>
+                    </div>
+
+                </div>         
+        
+            </div>
+    
+            <div class="section">
+                page 3
+
+                <div class="footer">LEVELUPTHON 11 | 2019</div>
+
+            </div>
+        
+        
+        
+                
+
+        </div> -->
+
+
+</body>
+<script>
+	var name = '<%= name %>';
+	console.log(name);
+	// new fullpage('#container', {
+	// 	navigation: true,
+	// });
+</script>
+</html>

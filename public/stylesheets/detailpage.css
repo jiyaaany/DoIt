@@ -1,0 +1,115 @@
+.l_row {
+    margin: 0 -10px;
+    overflow: hidden;
+    padding-top: 30px;
+}
+
+.l_col {
+    float: left;
+    box-sizing: border-box;
+    padding: 0 10px;
+}
+
+.l_col_12_12 { width: 100%; }
+.l_col_11_12 { width: 91.66666667%; }
+.l_col_10_12 { width: 83.33333333%; }
+.l_col_9_12  { width: 75%; }
+.l_col_8_12  { width: 66.66666667%; }
+.l_col_7_12  { width: 58.33333333%; }
+.l_col_6_12  { width: 50%; }
+.l_col_5_12  { width: 41.66666667%; }
+.l_col_4_12  { width: 33.33333333%; }
+.l_col_3_12  { width: 25%; }
+.l_col_2_12  { width: 16.66666667%; }
+.l_col_1_12  { width: 8.33333333%; }
+
+.contents{
+    height: 100%;
+    color: rgb(255, 255, 255);
+}
+
+.innercontents{
+    overflow: hidden;
+    height: 100%;
+
+}
+
+
+.curriculum{
+    box-sizing: border-box;
+    width: 850px;
+    height: 100%;
+    float: left;
+    padding: 100px 0;
+}
+
+.mentor{
+    box-sizing: border-box;
+    width: 350px;
+    height: 100%;
+    border-left: #c5c6c7 2px solid;
+    float: right;
+    padding: 100px 0;
+    overflow: hidden;
+}
+
+h1{
+    color: white;
+    font-size: 3em;
+    margin: 10px 0;
+    border-bottom: 2px solid white;
+    padding: 10px;
+}
+
+h2{
+    color: white;
+    font-size: 1.5em;
+    margin: 10px 0;
+    border-bottom: 2px solid white;
+    padding: 10px;
+}
+
+ul{
+    color: #c5c6c7;
+    font-size: 1.5em;
+}
+
+ul li{
+    margin: 10px 0;
+}
+
+/* li span{
+    font-size: 2em;
+} */
+
+.prof{
+    border-radius: 50%;
+    border: rgb(185, 185, 185) 5px solid;
+    position: relative;
+    margin: 0 auto;
+    display: block;
+}
+
+
+.mentor h2{
+    color: white;
+
+    text-align: center;
+}
+
+.mentor p{
+    text-align: center;
+    font-size: 1.5em;
+    line-height: 40px;
+}
+
+.addStudy{
+    margin: 30px auto;
+    height: 60px;
+    color: white;
+    width: 120px;
+    background-color: #45a29e;
+    margin-left: 114px;
+    font-size: 1.6em;
+    text-align: center;
+}

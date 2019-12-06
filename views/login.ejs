@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DO_IT</title>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Noto+Sans:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<link rel="stylesheet" href="../stylesheets/layout.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<style>
+html, body {
+	width: 100%; height: 100%;
+}
+.container-500 {
+	width: 500px;
+	margin: 0 auto;
+	color: #66fcf1;
+	text-align: center;
+}
+
+.container-500 h2 {
+	padding: 30px 0;
+	text-align: center;
+}
+
+.signin label {
+	display: block;
+	text-align: left;
+	width: 500px;
+}
+
+input[type=text], input[type=password] {
+	width: 500px;
+	padding: 12px 20px;
+	margin: 10px 0 15px 0;
+	display: inline-block;
+	border-bottom: 1px solid #c5c6c7;
+	color: white;
+}
+
+.container-500 button {
+	background-color: #45a29e;
+	color: white;
+	padding: 14px 20px;
+	margin: 10px 0 30px 0;
+	border: none;
+	cursor: pointer;
+	width: 500px;
+}
+
+
+.signup {
+	padding-bottom: 140px;
+}
+
+.psw,
+.signup {
+	font-size: .8em;
+	color: #c5c6c7;
+}
+
+.psw a,
+.signup a {
+	color: #66fcf1;
+}
+
+button:hover,
+.psw a:hover,
+.signup a:hover {
+	opacity: 0.8;
+}
+</style>
+</head>
+<body>
+	<div class="head" style="height:7.4%">
+		<a class="logo" href="/"><img src="../images/logo_long.png"></a>
+		<div class="nav">
+			<ul>
+				<li><a href="/user/login">로그인</a></li>
+				<li><a href="#">코치신청</a></li>
+			</ul>
+		</div> 
+	</div>
+	<div class="contents" style="height:81%">
+		<div class="container-500">
+			<h2>Sign In</h2>
+			<div class="signin">
+				<label for="uname">UserId</label>
+				<input type="text" placeholder="Enter UserId" id="userId"><br>
+
+				<label for="psw">Password</label>
+				<input type="password" placeholder="Enter Password" id="userPw"><br>
+
+				<button type="submit" id="login">Login</button>
+				<div class="psw">Forgot <a href="#">password?</a></div>
+				<div class="signup">Don't have an account? <a href="/user/join">Sign Up</a></div>
+			</div>
+		</div>
+	</div>
+	<div class="footer" style="height:11.6%">ⓒ LEVELUPTHON 11 | 2019</div>
+</body>
+<script>
+$(document).ready(function() {
+	$('#login').click(function() {
+		var userId = $.trim($("#userId").val());
+		var userPw = $.trim($("#userPw").val());
+		if(userId == '') {
+			alert("아이디 입력이 필요합니다.");
+			$("#userId").focus();
+			return;
+		}
+		if(userPw == '') {
+			alert("비밀번호 입력이 필요합니다.");
+			$("#userPw").focus();
+			return;
+		}
+		$.ajax({
+			url: '/user/login',
+			dataType: 'json',
+			type: 'POST',
+			data: {
+					userId : userId,
+					userPw : userPw
+				},
+			success: function(result) {
+				var loginCheck = result.result;
+				if(loginCheck == 'Success') {
+					location.href = '/';
+				} else {
+					alert('회원정보가 일치하지 않습니다.');	
+				}
+			}
+		});
+	});
+	$("#userPw").keydown(function(key) {
+		if (key.keyCode == 13) {
+			$("#login").click();
+		}
+	});
+	$("#userId").focus();
+});
+</script>
+</html>

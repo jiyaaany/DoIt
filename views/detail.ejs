@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DO_IT</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<!--초기화-->
+	<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+	<!-- 기본 헤더 컨텐츠 푸터 layout -->
+	<link rel="stylesheet" href="../../stylesheets/layout.css">
+	<link rel="stylesheet" href="../../stylesheets/detailpage.css">
+</head>
+<body>
+<div class="head">
+	<a class="logo" href="/"><img src="../../images/logo_long.png"></a>
+	<div class="nav">
+		<ul>
+			<li><a href="/user/mypage"><%=name%>님 환영합니다.</a></li>
+			<li><a href="#">로그아웃</a></li>
+		</ul>
+	</div>
+</div>
+
+<!-- 인원, 시작종료일, 지역, 운동, 커리큘럼, 강사 소개 -->
+<div class="contents">
+	<div class="innercontents">
+		<div class="curriculum">
+			<h1><%=study[0].subject%></h1>
+			<ul>
+				<li> 수업목표 : <span>올바른 런닝 배우기</span></li>
+				<li> <span>정원</span> : <%=study[0].personnel%>명</li>
+				<li> <span>시작 종료일 :</span> <%=study[0].startDate%> - <%=study[0].endDate%> </li>
+				<li> <span>지역 :</span> <%=study[0].region%></li>
+				<li> <span>커리큘럼</span></li>
+				<p>
+					1주차 : 공원 산책하며 건강하게 걷는 법 습득 <br>
+					2주차 : 광교산 등산 후 막걸리 한 잔<br>
+					3주차, 4주차는 추후 공지<br>
+				</p>
+			</ul>
+			<div class="l_row">
+				<div class="l_col l_col_4_12"><img src="http://placehold.it/200x200" alt=""></div>
+				<div class="l_col l_col_4_12"><img src="http://placehold.it/200x200" alt=""></div>
+				<div class="l_col l_col_4_12"><img src="http://placehold.it/200x200" alt=""></div>
+			</div>
+		</div>
+		<div class="mentor">
+			<img src="http://placehold.it/200x200" alt="" class="prof">
+			<h2>강사 홍길동</h2>
+			<p>
+				약력
+				<br>
+				걷기대회 챔피언<br>
+				한강걷기 매니아<br>
+				마라톤 10회 완주<br>
+				체육교육과 졸업<br>
+			</p>
+			<input type="button" value="수강 신청" class="addStudy" id="btnParti">
+		</div>
+	</div>
+</div>
+
+
+<div class="footer">LEVELUPTHON 11 | 2019</div>
+    <script>
+      $("#btnParti").click(function(){
+        $.ajax({
+          url : '/study/partiStudy',
+          async : true,
+          type : 'POST',
+          data : {
+            user_id : '<%=user_id%>', //추후수정
+            study_id : <%=study[0].study_id%>
+          },
+          dataType : 'json',
+          success : function(data){
+            var result = data.result;
+            if(result == 'Success'){
+                alert('참가신청 되었습니다!');
+				location.href = '/user/mypage';
+            }else{
+              alert('다시시도 해주세요');
+            }
+          },
+          error : function(err){
+            alert('실패!' + err);
+          }
+        })
+      });
+    </script>
+
+</body>
+</html>

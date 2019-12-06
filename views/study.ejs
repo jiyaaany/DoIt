@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DO_IT</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <h1>StudyPage</h1>
+    <a href="/studyDetail">스터디</a>
+    <p>js data : <%=title%></p>
+		<h3>스터디 목록</h3>
+    <input type="text" id="txtSearch">
+    <input type="button" id="btnSearch" value="검색">
+		<% if(studyList != null && studyList.length > 0){ %>
+		<ul id="studyList">
+			<% for ( var i = 0; i < studyList.length; i++){ %>
+				<li>
+          <a href="/study/detail/<%=studyList[i].study_id%>" data-ajax="false"><%=studyList[i].subject%></a>
+				</li>
+			<% } %>
+		</ul>
+		<% }else{ %>
+		<p>가입한 스터디가 없습니다.</p>
+		<% } %>
+  <script>
+  $("#btnSearch").click(function(){
+    var search_text = $("#txtSearch").val();
+    if(search_text == ''){
+      alert('검색어를 입력해주세요!');
+    }
+    else{
+      $.ajax({
+        url : '/study/search',
+        async : true,
+        type : 'GET',
+        data : {
+          search_text : search_text
+        },
+        dataType : 'json',
+        success : function(data){
+
+          if(data.studyList.length>0){
+            var str = '';
+            for(var i =0; i<data.studyList.length; i++){
+              str += '<li><a href="/study/detail/'+data.studyList[i].study_id+' data-ajax="false">'+data.studyList[i].subject+'</a></li>';
+            }
+            $("#studyList").html("");
+            $("#studyList").html(str);
+
+          }else{
+            $("#studyList").html("");
+          }
+
+        },
+        error : function(err){
+          alert('다시 검색해주세요!');
+        }
+      });
+    }
+
+  });
+  </script>
+</body>
+</html>

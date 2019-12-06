@@ -1,0 +1,52 @@
+
+/*네이게이션 동그라미 색상 바꾸기*/
+#fp-nav ul li a span{
+    background-color: rgb(255, 255, 255);
+}
+
+.section1{
+    color: rgb(255, 255, 255);
+}
+
+.innercontents{
+    position: relative;
+}
+
+.maintext{
+    font-size: 7em;
+    font-weight: 800;
+    position: absolute;
+    right: 45%;
+    top : 50%;
+    transform: translate(-50%,-50%);
+
+}
+
+.contents{
+    background-image: url("../images/home/main-img-running-resizing.jpg");
+    background-size: cover;
+    font-family: 'Do Hyeon', sans-serif;
+	min-height: 500px;
+}
+
+.maintext span{
+    color: #45a29e;
+}
+
+.tologin{
+    color: rgb(255, 255, 255);
+    width: 250px;
+    height: 50px;
+    background-color: #45a29e;
+    font-size: 25px;
+    line-height: 50px;
+    text-align: center;
+    font-weight: 500;
+    margin-left: 15px;
+    margin-top: 10px;
+    
+}
+
+.contentsBox span{
+    color: #45a29e;
+} 

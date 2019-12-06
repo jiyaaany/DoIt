@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DO_IT</title>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Noto+Sans:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<link rel="stylesheet" href="../stylesheets/layout.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<style>
+html, body {
+	width: 100%; height: 100%;
+}
+.container-500 {
+	width: 500px;
+	margin: 0 auto;
+	color: #66fcf1;
+	text-align: center;
+}
+
+.container-500 h2 {
+	padding: 30px 0;
+	text-align: center;
+}
+
+.signup label {
+	display: block;
+	text-align: left;
+	width: 500px;
+}
+
+input[type=text], input[type=password] {
+	width: 500px;
+	padding: 12px 20px;
+	margin: 10px 0 15px 0;
+	display: inline-block;
+	border-bottom: 1px solid #c5c6c7;
+	color: white;
+}
+
+.container-500 button {
+	background-color: #45a29e;
+	color: white;
+	padding: 14px 20px;
+	margin: 10px 0 30px 0;
+	border: none;
+	cursor: pointer;
+	width: 500px;
+}
+
+.container-500 .id {
+	width: 340px;
+}
+
+.container-500 button.doubleCheck {
+	width: 150px;
+	margin: 10px 0 15px 0;
+
+}
+
+.signin {
+	font-size: .8em;
+	color: #c5c6c7;
+	padding-bottom: 40px;
+}
+
+.signin a {
+	color: #66fcf1;
+}
+
+button:hover,
+.signin a:hover {
+	opacity: 0.8;
+}
+</style>
+</head>
+<body>
+<div class="head" style="height:7.4%">
+	<a class="logo" href="/"><img src="../images/logo_long.png"></a>
+	<div class="nav">
+		<ul>
+			<li><a href="/user/login">로그인</a></li>
+			<li><a href="#">코치신청</a></li>
+		</ul>
+	</div> 
+</div>
+<div class="contents" style="hegith:81%">
+	<div class="container-500">
+		<div class="signup">
+			<h2>Sign Up</h2>
+
+			<label for="id">Id</label>
+			<input class="id" type="text" placeholder="Enter Id" id="userId" required>
+			<button class="doubleCheck" type="submit" id="idCheck">Double Check</button>
+
+			<label for="psw">Password</label>
+			<input type="password" placeholder="Enter Password" id="userPw" required>
+
+			<label for="psw-repeat">Repeat Password</label>
+			<input type="password" placeholder="Repeat Password" id="userPw2" name="psw-repeat" required>
+			<!--id중복체크 버튼만들기. -->
+			<label for="name">Name</label>
+			<input type="text" placeholder="Enter Name" id="userNm" required>
+
+			<label for="phone">Phone</label>
+			<input type="text" placeholder="Enter Phone Number" id="phone" required>
+
+			<label for="email">Email</label>
+			<input type="text" placeholder="Enter Email" id="email" required>
+
+			<div class="clearfix">
+				<button type="submit" class="signupbtn" id="userJoin">Sign Up</button>
+			</div>
+
+			<div class="signin">Already have an account? <a href="/user/login">Sign In</a></div>
+		</div>
+	</div>
+</div>
+<div class="footer" style="hegith:11.4%">ⓒ LEVELUPTHON 11 | 2019</div>
+</body>
+<script>
+$(document).ready(function () {
+	var checkResult = false;
+	
+	$("#userJoin").click(function() {
+		var userId = $.trim($("#userId").val());
+		var userPw = $.trim($("#userPw").val());
+		var userNm = $.trim($("#userNm").val());
+		var email  = $.trim($("#email").val());
+		var phone  = $.trim($("#phone").val());
+		var userPw2 = $.trim($("#userPw2").val());
+		
+		if(!checkResult) {
+			alert("아이디 중복체크가 필요합니다.");
+			return;
+		}
+		
+		if(userPw != userPw2) {
+			alert("비밀번호가 일치하지 않습니다.");
+			$("#userPw").val("");
+			$("#userPw2").val("");
+			$("#userPw").focus();
+			return;
+		}
+		
+		if(userId == '' || userPw == '' || userNm == '' || email == '' || phone == '') {
+			alert("모든 정보는 필수 입력사항입니다.");
+			return;
+		}
+		
+		$.ajax({
+			url: '/user/join',
+			dataType: 'json',
+			type: 'POST',
+			data: {
+					userId : userId,
+					userPw : userPw,
+					userNm : userNm,
+					email  : email,
+					phone  : phone
+				},
+			success: function(result) {
+				var joinResult = result.result;
+				if(joinResult == 'Success') {
+					alert("회원가입이 완료되었습니다.");
+					location.href = '/';
+				} else {
+					alert('처리중 문제가 발생하였습니다. 다시 시도해주세요.');	
+				}
+			}
+		});
+	});
+	
+	$("#idCheck").click(function() {
+		var userId = $.trim($("#userId").val());
+		if(userId == '') {
+			alert("아이디를 입력해주세요.");
+			$("#userId").focus();
+			return;
+		}
+		
+		$.ajax({
+			url: '/user/idCheck',
+			dataType: 'json',
+			type: 'POST',
+			data: {
+					userId : userId
+				},
+			success: function(result) {
+				var check = result.result;
+				if(check == 'Success') {
+					alert("사용 가능한 아이디 입니다.");
+					checkResult = true;
+				} else {
+					alert("중복된 아이디가 존재합니다.");
+					checkResult = false;
+				}
+			}
+		});
+	});
+});
+</script>
+</html>
